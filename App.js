@@ -1,6 +1,9 @@
-import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, ScrollView } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import SelectDropdown from 'react-native-select-dropdown'
 import Button from './components/Button';
+
 
 const Header = () => {
   return (
@@ -11,6 +14,8 @@ const Header = () => {
 };
 
 const Form = () => {
+  const alertTypes = ['Voirie', 'Stationnement', 'Travaux', 'Divers']
+
   const buttonProps = {
     title: 'J\'Alerte ma Ville',
     icon: 'bell-o',
@@ -20,6 +25,38 @@ const Form = () => {
   };
   return (
     <View style={styles.container}>
+      <Text style={[styles.p, {}]}>Merci de sélectionner le type d'alerte dans la liste : </Text>
+      <ScrollView
+          showsVerticalScrollIndicator={false}
+          alwaysBounceVertical={false}
+          contentContainerStyle={styles.scrollViewContainer}>
+        <SelectDropdown
+          data={alertTypes}
+          defaultValueByIndex={0}
+          onSelect={(selectedItem, index) => {
+            console.log(selectedItem, index)
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            // text represented after item is selected
+            // if data array is an array of objects then return selectedItem.property to render after item is selected
+            return selectedItem
+          }}
+          rowTextForSelection={(item, index) => {
+            // text represented for each item in dropdown
+            // if data array is an array of objects then return item.property to represent item in dropdown
+            return item
+          }}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          renderDropdownIcon={isOpened => {
+            return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={18} />;
+          }}
+          dropdownIconPosition={'right'}
+          dropdownStyle={styles.dropdown1DropdownStyle}
+          rowStyle={styles.dropdown1RowStyle}
+          rowTextStyle={styles.dropdown1RowTxtStyle}
+        />
+      </ScrollView>
       <View style={styles.bottom}>
         <Button props={buttonProps} />
       </View>
@@ -30,8 +67,8 @@ const Form = () => {
 export default function App() {
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{backgroundColor: '#42a5f5' }} >
-          <Header />
+      <SafeAreaView style={{ backgroundColor: '#42a5f5' }} >
+        <Header />
       </SafeAreaView>
       <View style={{ width: '100%', height: 250 }}>
         <Image
@@ -71,5 +108,25 @@ const styles = StyleSheet.create({
   p: {
     textAlign: 'justify',
     padding: 10
-  }
+  },
+
+  scrollViewContainer: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: '10%',
+    paddingBottom: '20%',
+  },
+  dropdown1BtnStyle: {
+    width: 250,
+    height: 50,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#444',
+  },
+  dropdown1BtnTxtStyle: {color: '#444', textAlign: 'left'},
+  dropdown1DropdownStyle: {backgroundColor: '#EFEFEF'},
+  dropdown1RowStyle: {backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5'},
+  dropdown1RowTxtStyle: {color: '#444', textAlign: 'left'},
 });
