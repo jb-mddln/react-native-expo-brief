@@ -20,5 +20,14 @@
 
 <details>
     <summary>Rendu sur IOS</summary>
-    <img  width="25%"  src="ios.gif">
+    <ul>
+        <li>
+            <p>1er rendu 20/09/23</p>
+            <img width="25%" src="ios-1.gif" alt="Rendu 1 sur iOS">
+        </li>
+        <li>
+            <p>2e rendu 21/09/23</p>
+            <img width="25%" src="ios-2.gif" alt="Rendu 2 sur iOS">
+        </li>
+    </ul>
 </details>

@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#42a5f5',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 5,
+    borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontSize: 16
+    fontSize: 14
   },
   icon: {
     paddingRight: 8
