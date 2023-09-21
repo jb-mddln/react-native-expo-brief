@@ -23,12 +23,14 @@ export default function HomePage() {
         showsVerticalScrollIndicator={false}
         alwaysBounceVertical={false}
         contentContainerStyle={styles.scrollViewContainer}
+        style={{ backgroundColor: '#fff'}}
       >
-        <View style={{ width: '100%', height: 350 }}>
+        <View style={{ width: '100%', height: 300 }}>
           <Image
             style={{
               width: '100%',
-              height: '100%'
+              height: '100%',
+              resizeMode: 'contain'
             }}
             source={require('../assets/homescreen.png')}
           />
@@ -56,6 +58,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: '20%',
-    backgroundColor: '#ffffff',
-  },
+    backgroundColor: '#fff'
+  }
 });
