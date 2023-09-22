@@ -26,7 +26,7 @@
             <img width="25%" src="ios-1.gif" alt="Rendu 1 sur iOS">
         </li>
         <li>
-            <p>2e rendu 21/09/23</p>
+            <p>2e rendu 22/09/23</p>
             <img width="25%" src="ios-2.gif" alt="Rendu 2 sur iOS">
         </li>
     </ul>
