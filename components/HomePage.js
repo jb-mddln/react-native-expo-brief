@@ -40,8 +40,8 @@ export default function HomePage() {
         />
         <Button
           props={{
-            title: 'J\'Alerte ma Ville',
-            icon: 'bell-o',
+            title: 'Aller sur le formulaire',
+            icon: 'arrow-circle-right',
             onPress: () => {
               navigation.navigate('report');
             }

@@ -13,11 +13,46 @@ import SelectDropdown from 'react-native-select-dropdown';
 import MapView, { Marker } from 'react-native-maps';
 import Button from './Button';
 import Input from './Input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './Header';
 import TextBubble from './TextBubble';
 
-const RenderMapView = ({ region, setMapRegion }) => {
+const mapViewerDefaultRegion = {
+  latitude: 50.633333,
+  longitude: 3.066667,
+  latitudeDelta: 0.015,
+  longitudeDelta: 0.0121,
+};
+const alertTypes = ['Voirie', 'Stationnement', 'Travaux', 'Divers'];
+
+const GetAddress = (latitude, longitude, setAddress) => {
+  // console.log(`GetAddress: ${latitude} ${longitude}`)
+  fetch(`${process.env.EXPO_PUBLIC_GEO_API_URL}/geocode/reverse?lat=${latitude}&lon=${longitude}&type=street&lang=fr&limit=1&format=json&apiKey=${process.env.EXPO_PUBLIC_GEO_API_KEY}`)
+  .then(response => response.json())
+  .then(result => {
+    setAddress(result.results[0].formatted);
+  })
+  .catch(error => console.log('GetAddress error', error));
+}
+
+const GetCoordinatesFromAddress = (address, setMapRegion) => {
+  if (address.length < 10)
+    return;
+
+  fetch(`${process.env.EXPO_PUBLIC_GEO_API_URL}/geocode/search?text=${encodeURIComponent(address)}&limit=1&apiKey=${process.env.EXPO_PUBLIC_GEO_API_KEY}`)
+    .then(response => response.json())
+    .then(result => {
+      // console.log(result);
+      if (result.features && result.features.length > 0) {
+        // console.log(result.features[0].geometry.coordinates)
+        const { lat, lon } = result.features[0].geometry.coordinates;
+        setMapRegion(result.features[0].geometry.coordinates);
+      }
+    })
+    .catch(error => console.log('GetCoordinatesFromAddress error:', error));
+}
+
+const RenderMapView = ({ region, setMapRegion, updateAddress }) => {
   // Android need google map api ? and web is not supported
   return (Platform.OS === 'ios') && (
     <MapView
@@ -31,6 +66,7 @@ const RenderMapView = ({ region, setMapRegion }) => {
         onDragEnd={(e) => {
           console.log(`mapViewerOnDragEnd: ${e.nativeEvent.coordinate.latitude} ${e.nativeEvent.coordinate.longitude}`)
           setMapRegion(e.nativeEvent.coordinate)
+          GetAddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude, updateAddress);
         }}
       />
     </MapView>
@@ -38,14 +74,14 @@ const RenderMapView = ({ region, setMapRegion }) => {
 }
 
 const Form = () => {
-  const alertTypes = ['Voirie', 'Stationnement', 'Travaux', 'Divers'];
   const [lastName, setLastName] = useState('');
-  const[mapViewerRegion, setMapViewerRegion] = useState({
-    latitude: 50.633333,
-    longitude: 3.066667,
-    latitudeDelta: 0.015,
-    longitudeDelta: 0.0121,
-  });
+  const [mapViewerRegion, setMapViewerRegion] = useState(mapViewerDefaultRegion);
+  const [address, setAddress] = useState('');
+
+  useEffect(() => {
+    GetAddress(mapViewerRegion.latitude, mapViewerRegion.longitude, setAddress);
+  }, []);
+
 
   return (
     <View style={styles.container}>
@@ -105,7 +141,9 @@ const Form = () => {
           multiline 
           numberOfLines={8} 
         />
-        <RenderMapView region={mapViewerRegion} setMapRegion={setMapViewerRegion} />
+        <TextBubble text={'Sélectionnez un point sur la carte.'} />
+        <Input placeholder={address} width={380} editable={false}/>
+        <RenderMapView region={mapViewerRegion} setMapRegion={setMapViewerRegion} updateAddress={setAddress} />
       </View>
       <View style={styles.bottom}>
         <Button props={{ 

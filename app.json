@@ -21,10 +21,23 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.jb.mddln.reactnativeexpobrief"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "135f240c-b427-4eeb-bc16-ee0424edd835"
+      }
+    },
+    "owner": "jb.mddln",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/135f240c-b427-4eeb-bc16-ee0424edd835"
     }
   }
 }
