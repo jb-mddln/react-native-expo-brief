@@ -18,8 +18,13 @@
 * Possibilité de naviguer vers la page des mentions légales de l'application.
 * Chaque alerte doit être envoyée à une adresse e-mail spécifique en fonction du type d'alerte. Par exemple, les alertes liées à la voirie doivent être envoyées à l'adresse voirie@simplonville.co, et ainsi de suite.
 
+### Rendu
+1er projet en React/React Native. L'application n'est pas encore terminée, et certains éléments importants du cahier des charges manquent, tels que l'envoi d'e-mails, l'ajout de photos et l'utilisation de la caméra.
+
+L'application se compose d'une page d'accueil avec un bouton qui nous redirige vers notre formulaire. Le formulaire comprend quelques éléments basiques, notamment le nom, le prénom, la carte et l'affichage de l'adresse grâce à l'api geoapify.
+
 <details>
-    <summary>Rendu sur IOS</summary>
+    <summary>Rendu sur IOS + QR Code ExpoGo pour tester l'application en live</summary>
     <ul>
         <li>
             <p>1er rendu 20/09/23</p>
@@ -28,6 +33,16 @@
         <li>
             <p>2e rendu 22/09/23</p>
             <img width="25%" src="ios-2.gif" alt="Rendu 2 sur iOS">
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <p>Android</p>
+            <img width="25%" src="android-qr-code.png" alt="QR Code Android">
+        </li>
+        <li>
+            <p>IOS</p>
+            <img width="25%" src="ios-qr-code.png" alt="QR Code IOS">
         </li>
     </ul>
 </details>
