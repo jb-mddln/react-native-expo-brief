@@ -75,13 +75,16 @@ const RenderMapView = ({ region, setMapRegion, updateAddress }) => {
 
 const Form = () => {
   const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState('');
+  const [description, setDescription] = useState('');
+  const [type, setType] = useState('');
   const [mapViewerRegion, setMapViewerRegion] = useState(mapViewerDefaultRegion);
   const [address, setAddress] = useState('');
 
   useEffect(() => {
     GetAddress(mapViewerRegion.latitude, mapViewerRegion.longitude, setAddress);
   }, []);
-
 
   return (
     <View style={styles.container}>
@@ -93,22 +96,26 @@ const Form = () => {
         }}
       >
         <Input placeholder='Entrez votre nom' required width={185} onChangeText={(value) => {
-          console.log(`onChangeText: ${value}`);
           setLastName(value);
         }}
         />
         <View style={{ marginRight: 10 }} />
-        <Input placeholder='Entrez votre prénom' required  width={185}/>
+        <Input placeholder='Entrez votre prénom' required  width={185} onChangeText={(value) => {
+          setFirstName(value);
+        }} />
       </View>
       <View>
-        <Input placeholder='Entrez votre email' required width={380} />
+        <Input placeholder='Entrez votre email' required width={380} onChangeText={(value) => {
+          setEmail(value);
+        }} />
       </View>
       <TextBubble text={'Merci de sélectionner le type d\'alerte que vous souhaitez signaler dans la liste :'} />
       <SelectDropdown
         data={alertTypes}
         defaultValueByIndex={0}
         onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
+          // console.log(selectedItem, index);
+          setType(value)
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem;
@@ -139,8 +146,9 @@ const Form = () => {
           width={380} 
           height={180}
           multiline 
-          numberOfLines={8} 
-        />
+          numberOfLines={8} onChangeText={(value) => {
+            setDescription(value);
+          }} />
         <TextBubble text={'Sélectionnez un point sur la carte.'} />
         <Input placeholder={address} width={380} editable={false}/>
         <RenderMapView region={mapViewerRegion} setMapRegion={setMapViewerRegion} updateAddress={setAddress} />
@@ -149,9 +157,13 @@ const Form = () => {
         <Button props={{ 
           title: 'J\'Alerte ma Ville', 
           icon: 'bell-o' ,
-          onPress: () => { 
-            console.log('click'); 
-            console.log(lastName); 
+          onPress: () => {
+            console.log(lastName);
+            console.log(firstName);
+            console.log(email);
+            console.log(description);
+            console.log(type);
+            console.log(address);
           }
         }} />
       </View>

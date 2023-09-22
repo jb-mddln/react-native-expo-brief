@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 
-export default function Input({ placeholder = '', required = false, width = '100%', height = 50, editable = true, multiline = false, numberOfLines = 0, onChangeText, onBlur, disabled }) {
+export default function Input({ placeholder = '', required = false, width = '100%', height = 50, editable = true, multiline = false, numberOfLines = 0, onChangeText, onBlur }) {
   const [text, setText] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
@@ -13,7 +13,7 @@ export default function Input({ placeholder = '', required = false, width = '100
   return (
     <TextInput
       placeholder={required ? `${placeholder} *` : placeholder}
-      style={[styles.input, borderStyle, { width: width }, { height: height }, { backgroundColor: disabled ? '#EFEFEF' : '#FFF' }]}
+      style={[styles.input, borderStyle, { width: width }, { height: height }, { backgroundColor: editable ? '#FFF' : '#EFEFEF' }]}
       onChangeText={value => {
         setText(value);
         onChangeText && onChangeText(value);
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     color: '#444',
     textAlign: 'left',
     height: 50,
-    backgroundColor: '#FFF',
+    
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#42a5f5',
